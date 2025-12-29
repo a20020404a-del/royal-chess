@@ -1,0 +1,27 @@
+{
+  "name": "Royal Chess - 優雅なチェス体験",
+  "short_name": "Royal Chess",
+  "description": "エレガントなデザインのチェスアプリ。オフライン対応、コンピューター対戦機能付き。",
+  "start_url": "./chess.html",
+  "display": "standalone",
+  "background_color": "#0a2f23",
+  "theme_color": "#0a2f23",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "ja",
+  "dir": "ltr"
+}

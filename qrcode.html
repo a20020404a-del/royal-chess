@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Chess - QRコード</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            color: #aaa;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .public-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: #000;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        .qr-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+        }
+        #qrcode svg {
+            width: 280px;
+            height: 280px;
+        }
+        .url-display {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: #ffd700;
+            word-break: break-all;
+        }
+        .url-display a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+        .url-display a:hover {
+            text-decoration: underline;
+        }
+        .copy-btn {
+            background: #ffd700;
+            border: none;
+            color: #1a1a2e;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 0.5rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: #ffed4a;
+        }
+        .copy-btn.copied {
+            background: #00c853;
+            color: #fff;
+        }
+        .instructions {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        .instructions h2 {
+            color: #ffd700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .instructions ol {
+            padding-left: 1.5rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+        .instructions li {
+            margin-bottom: 0.3rem;
+        }
+        .instructions strong {
+            color: #fff;
+        }
+        .note {
+            padding: 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 3px solid #ffd700;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #aaa;
+            text-align: left;
+        }
+        .note strong {
+            color: #ffd700;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: #ffd700;
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.2s;
+            margin: 0.5rem;
+        }
+        .btn:hover {
+            background: #ffed4a;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+        }
+        .btn-outline:hover {
+            background: #ffd700;
+            color: #1a1a2e;
+        }
+        .warning {
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid rgba(233, 69, 96, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Royal Chess</h1>
+        <p class="subtitle">FIDE Standard Chess Game</p>
+
+        <div class="public-badge">PUBLIC ACCESS</div>
+
+        <div class="qr-container">
+            <div id="qrcode"></div>
+        </div>
+
+        <div class="url-display">
+            <a href="https://polite-trains-create.loca.lt/chess.html" target="_blank" id="publicUrl">
+                https://polite-trains-create.loca.lt/chess.html
+            </a>
+            <button class="copy-btn" onclick="copyUrl()">Copy</button>
+        </div>
+
+        <div class="instructions">
+            <h2>誰でもプレイできます！</h2>
+            <ol>
+                <li>QRコードをスキャン、またはURLをシェア</li>
+                <li>初回アクセス時に「Click to Continue」をクリック</li>
+                <li><strong>ホーム画面に追加</strong>でオフラインでもプレイ可能</li>
+            </ol>
+        </div>
+
+        <div class="note">
+            <strong>PWA対応:</strong> 一度アクセスすれば、インターネット接続なしでもプレイできます。「ホーム画面に追加」でアプリのように使えます。
+        </div>
+
+        <div class="warning">
+            このURLはこのPCがオンラインの間のみ有効です。PCをスリープ/シャットダウンするとアクセスできなくなります。
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+            <a href="https://polite-trains-create.loca.lt/chess.html" class="btn" target="_blank">プレイする →</a>
+            <a href="chess.html" class="btn btn-outline">ローカルでプレイ</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>
+        const publicUrl = 'https://polite-trains-create.loca.lt/chess.html';
+
+        // Generate QR Code
+        const qr = qrcode(0, 'M');
+        qr.addData(publicUrl);
+        qr.make();
+
+        document.getElementById('qrcode').innerHTML = qr.createSvgTag({
+            cellSize: 6,
+            margin: 0,
+            scalable: true
+        });
+
+        // Copy URL function
+        function copyUrl() {
+            navigator.clipboard.writeText(publicUrl).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
